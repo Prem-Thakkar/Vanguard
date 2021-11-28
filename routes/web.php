@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Authentication
  */
@@ -123,6 +124,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     /**
      * Roles & Permissions
      */
+
+    Route::resource('manage_courses', 'CourseController')->middleware('permission:manage.courses');
+
+    Route::get('courses', 'CourseController@list')->name('courses.list')->middleware('permission:courses.list');
+    Route::get('courses/{id}/detail', 'CourseController@detail')->name('courses.list.detail')->middleware('permission:courses.list');
+
     Route::group(['namespace' => 'Authorization'], function () {
         Route::resource('roles', 'RolesController')->except('show')->middleware('permission:roles.manage');
 

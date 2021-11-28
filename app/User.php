@@ -17,6 +17,8 @@ use Vanguard\Services\Auth\TwoFactor\Contracts\Authenticatable as TwoFactorAuthe
 use Vanguard\Support\Authorization\AuthorizationUserTrait;
 use Vanguard\Support\CanImpersonateUsers;
 use Vanguard\Support\Enum\UserStatus;
+use Vanguard\Course;
+use Vanguard\UserCourse;
 
 class User extends Authenticatable implements TwoFactorAuthenticatableContract, MustVerifyEmail
 {
@@ -99,6 +101,11 @@ class User extends Authenticatable implements TwoFactorAuthenticatableContract, 
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    public function usercourses()
+    {
+        return $this->hasMany(UserCourse::class, "user_id");
     }
 
     /**

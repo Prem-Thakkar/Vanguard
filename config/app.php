@@ -267,7 +267,7 @@ return [
         'Setting' => Akaunting\Setting\Facade::class,
         'Authy' => Vanguard\Services\Auth\TwoFactor\Facade::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
-
+        'Datatables' => Yajra\DataTables\Facades\DataTables::class
     ],
 
 ];
