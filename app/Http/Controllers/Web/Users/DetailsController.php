@@ -3,6 +3,7 @@
 namespace Vanguard\Http\Controllers\Web\Users;
 
 use Illuminate\Http\Request;
+use Vanguard\Course;
 use Vanguard\Events\User\Banned;
 use Vanguard\Events\User\UpdatedByAdmin;
 use Vanguard\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use Vanguard\Http\Requests\User\UpdateDetailsRequest;
 use Vanguard\Repositories\User\UserRepository;
 use Vanguard\Support\Enum\UserStatus;
 use Vanguard\User;
+use Vanguard\UserCourse;
 
 /**
  * Class UserDetailsController
@@ -41,13 +43,24 @@ class DetailsController extends Controller
     public function update(User $user, UpdateDetailsRequest $request)
     {
         $data = $request->all();
+        $courses = $request->courses;
 
-        if (! data_get($data, 'country_id')) {
+        if (!data_get($data, 'country_id')) {
             $data['country_id'] = null;
         }
 
         $this->users->update($user->id, $data);
         $this->users->setRole($user->id, $request->role_id);
+
+        UserCourse::where('user_id', $user->id)->delete();
+        if (!empty($request->courses)) {
+            foreach ($request->courses as $course) {
+                $addcourse = new UserCourse();
+                $addcourse->user_id = $user->id;
+                $addcourse->course_id = $course;
+                $addcourse->save();
+            }
+        }
 
         event(new UpdatedByAdmin($user));
 

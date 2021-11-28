@@ -14,6 +14,8 @@ use Vanguard\Repositories\Role\RoleRepository;
 use Vanguard\Repositories\User\UserRepository;
 use Vanguard\Support\Enum\UserStatus;
 use Vanguard\User;
+use Vanguard\Course;
+use Vanguard\UserCourse;
 
 /**
  * Class UsersController
@@ -58,6 +60,7 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+        $user = User::with('usercourses.course')->find($user->id);
         return view('user.view', compact('user'));
     }
 
@@ -73,7 +76,8 @@ class UsersController extends Controller
         return view('user.add', [
             'countries' => $this->parseCountries($countryRepository),
             'roles' => $roleRepository->lists(),
-            'statuses' => UserStatus::lists()
+            'statuses' => UserStatus::lists(),
+            'courses' => Course::all()
         ]);
     }
 
@@ -105,17 +109,24 @@ class UsersController extends Controller
             'email_verified_at' => now()
         ];
 
-        if (! data_get($data, 'country_id')) {
+        if (!data_get($data, 'country_id')) {
             $data['country_id'] = null;
         }
 
         // Username should be updated only if it is provided.
-        if (! data_get($data, 'username')) {
+        if (!data_get($data, 'username')) {
             $data['username'] = null;
         }
 
-        $this->users->create($data);
-
+        $user = $this->users->create($data);
+        if (!empty($request->courses)) {
+            foreach ($request->courses as $course) {
+                $addcourse = new UserCourse();
+                $addcourse->user_id = $user->id;
+                $addcourse->course_id = $course;
+                $addcourse->save();
+            }
+        }
         return redirect()->route('users.index')
             ->withSuccess(__('User created successfully.'));
     }
@@ -130,13 +141,20 @@ class UsersController extends Controller
      */
     public function edit(User $user, CountryRepository $countryRepository, RoleRepository $roleRepository)
     {
+        $user = User::with('usercourses')->find($user->id);
+        $usercourses = $user->usercourses->toArray();
+        $usercourses = array_column($usercourses, 'course_id');
+
+
         return view('user.edit', [
             'edit' => true,
             'user' => $user,
             'countries' => $this->parseCountries($countryRepository),
             'roles' => $roleRepository->lists(),
             'statuses' => UserStatus::lists(),
-            'socialLogins' => $this->users->getUserSocialLogins($user->id)
+            'socialLogins' => $this->users->getUserSocialLogins($user->id),
+            'courses' => Course::all(),
+            'usercourses' => $usercourses
         ]);
     }
 
