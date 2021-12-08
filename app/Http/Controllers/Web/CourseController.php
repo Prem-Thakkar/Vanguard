@@ -63,7 +63,7 @@ class CourseController extends Controller
         $addnewcourse->image =  $name;
         $addnewcourse->save();
 
-        return redirect()->route('manage_courses.index');
+        return redirect()->route('manage_courses.index')->withSuccess(__('Course created successfully.'));
     }
 
     /**
@@ -99,7 +99,7 @@ class CourseController extends Controller
         }
         $editcourse->save();
 
-        return redirect()->route('manage_courses.index');
+        return redirect()->route('manage_courses.index')->withSuccess(__('Course updated successfully.'));
     }
 
     /**
@@ -111,7 +111,7 @@ class CourseController extends Controller
     public function destroy($id)
     {
         $deleteCourse = Course::find($id)->delete();
-        return redirect()->route('manage_courses.index');
+        return redirect()->route('manage_courses.index')->withSuccess(__('Course deleted successfully.'));
     }
 
     public function list(Request $request)
@@ -122,7 +122,13 @@ class CourseController extends Controller
 
     public function detail($id)
     {
+        $isCourseFourUser = UserCourse::where('user_id', auth()->user()->id)->where('course_id', $id)->count();
+        if ($isCourseFourUser == 0 ) {
+            abort(403);
+        }
+
         $course = Course::findOrFail($id);
+
         return view('courses.detail',compact('course'));
     }
 }

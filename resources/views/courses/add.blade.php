@@ -88,7 +88,7 @@ $page_title =__('courses.create_page.title');
 @stop
 
 @section('scripts')
-{!! JsValidator::formRequest('Vanguard\Http\Requests\User\CreateCourseRequest', '#courseform') !!}
+{!! JsValidator::formRequest('Vanguard\Http\Requests\Course\CreateCourseRequest', '#courseform') !!}
 <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('description');
