@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     /**
      * Dashboard
      */
-
+    Route::post('acceptterms', 'Profile\ProfileController@acceptTerms')->name('acceptterms');
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
     /**

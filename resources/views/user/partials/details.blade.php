@@ -37,14 +37,14 @@
         </div>
     </div>
     @if($edit)
-    @if($user->role->id == 2)
+    @if($user->role->id == 2 && auth()->user()->role->id == 1)
     <div class="form-group col-md-6">
         <label for="address">@lang('courses.page_name')</label>
         <select id="courses" name="courses[]" multiple class="form-control">
             @if(!empty($courses))
-                @foreach($courses as $course)
-                    <option @if(in_array($course->id,$usercourses)) selected="" @endif value="{{$course->id}}">{{$course->title}}</option>
-               @endforeach
+            @foreach($courses as $course)
+            <option @if(in_array($course->id,$usercourses)) selected="" @endif value="{{$course->id}}">{{$course->title}}</option>
+            @endforeach
             @endif
         </select>
     </div>

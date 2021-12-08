@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -14,7 +15,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ url('assets/img/icons/apple-touch-icon-152x152.png') }}" />
     <link rel="icon" type="image/png" href="{{ url('assets/img/icons/favicon-32x32.png') }}" sizes="32x32" />
     <link rel="icon" type="image/png" href="{{ url('assets/img/icons/favicon-16x16.png') }}" sizes="16x16" />
-    <meta name="application-name" content="{{ setting('app_name') }}"/>
+    <meta name="application-name" content="{{ setting('app_name') }}" />
     <meta name="msapplication-TileColor" content="#FFFFFF" />
     <meta name="msapplication-TileImage" content="{{ url('assets/img/icons/mstile-144x144.png') }}" />
 
@@ -27,6 +28,7 @@
 
     @hook('app:styles')
 </head>
+
 <body>
     @include('partials.navbar')
 
@@ -42,10 +44,21 @@
         </div>
     </div>
 
+    @include('partials.terms-modal')
+
     <script src="{{ url(mix('assets/js/vendor.js')) }}"></script>
     <script src="{{ url('assets/js/as/app.js') }}"></script>
     @yield('scripts')
 
     @hook('app:scripts')
+
+    @auth
+    @if((!auth()->user()->is_terms_accepted) && auth()->user()->role_id == 2 && !empty(auth()->user()->email_verified_at))
+    <script>
+        $('#tos-modal').modal('show');
+    </script>
+    @endif
+    @endauth
 </body>
+
 </html>

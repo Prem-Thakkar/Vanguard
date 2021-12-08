@@ -20,5 +20,6 @@ return [
         'Active' => 'Active',
         'Banned' => 'Banned',
         'Unconfirmed' => 'Unconfirmed',
-    ]
+    ],
+    'accept' => 'Accept'
 ];
