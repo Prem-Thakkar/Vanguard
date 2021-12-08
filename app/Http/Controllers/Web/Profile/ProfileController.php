@@ -4,11 +4,13 @@ namespace Vanguard\Http\Controllers\Web\Profile;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
+use Request;
 use Vanguard\Http\Controllers\Controller;
 use Vanguard\Repositories\Country\CountryRepository;
 use Vanguard\Repositories\Role\RoleRepository;
 use Vanguard\Repositories\User\UserRepository;
 use Vanguard\Support\Enum\UserStatus;
+use Vanguard\User;
 
 /**
  * Class ProfileController
@@ -60,5 +62,14 @@ class ProfileController extends Controller
             'socialLogins' => $this->users->getUserSocialLogins(auth()->id()),
             'statuses' => UserStatus::lists()
         ]);
+    }
+
+    public function acceptTerms(Request $request)
+    {
+        $finduser = User::find(auth()->user()->id);
+        $finduser->is_terms_accepted = 1;
+        $finduser->save();
+
+        return redirect()->back();
     }
 }

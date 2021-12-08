@@ -37,6 +37,7 @@ Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProvider
  */
 Route::group(['middleware' => 'auth'], function () {
     Route::impersonate();
+    Route::post('acceptterms', 'Profile\ProfileController@acceptTerms')->name('acceptterms');
 });
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
