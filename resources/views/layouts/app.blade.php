@@ -53,7 +53,7 @@
     @hook('app:scripts')
 
     @auth
-    @if((!auth()->user()->is_terms_accepted) && auth()->user()->role_id == 2)
+    @if((!auth()->user()->is_terms_accepted) && auth()->user()->role_id == 2 && !empty(auth()->user()->email_verified_at))
     <script>
         $('#tos-modal').modal('show');
     </script>

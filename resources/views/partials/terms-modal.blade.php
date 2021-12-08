@@ -4,9 +4,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tos-label">@lang('Terms of Service')</h5>
+                @guest
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                @endguest
             </div>
             <div class="modal-body">
                 @include('auth.tos')
