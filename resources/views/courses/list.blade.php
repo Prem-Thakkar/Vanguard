@@ -19,26 +19,26 @@
 <div class="card">
     <div class="card-body row">
         @forelse($usercourses as $usercourse)
-            <div class="col-md-6">
-                <a href="{{ route('courses.list.detail',['id'=>$usercourse->course->id]) }}" class="text-dark">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <img  style="height:60px;" class="img-fluid img-thumbnail col-md-6" src="{{asset('storage/upload/course-images/'.$usercourse->course->image)}}" alt="Card image cap">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5>{{$usercourse->course->title}}</h5>
-                                        </div>
+        <div class="col-md-6">
+            <a href="{{ route('courses.list.detail',['id'=>$usercourse->course->id]) }}" class="text-dark">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img style="height:60px;" class="img-fluid img-thumbnail col-md-6" src="{{asset('storage/upload/course-images/'.$usercourse->course->image)}}" alt="Card image cap">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{{$usercourse->course->title}}</h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
+        </div>
 
         <!-- <div class="card col-md-2">
             <img style="height: 25%;" class="img-fluid img-thumbnail card-img-top" src="{{asset('storage/upload/course-images/'.$usercourse->course->image)}}" alt="Card image cap">
@@ -48,7 +48,11 @@
             </div>
         </div> -->
         @empty
-        <h2>No courses found.</h2>
+        <div class="col-md-12 text-center">
+            <div class="alert alert-dark" role="alert">
+                No courses found.
+            </div>
+        </div>
         @endforelse
     </div>
 </div>

@@ -23,14 +23,14 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <div class="table-responsive" id="course-table-wrapper">
+       <div class="table-responsive" id="users-table-wrapper">
             <table class="table table-borderless course-table table-striped">
                 <thead>
                     <tr>
-                        <th>id</th>
-                        <th>@lang('courses.table.title')</th>
-                        <th>@lang('courses.table.description')</th>
-                        <th>@lang('courses.table.action')</th>
+                        <th style="width: 10%;">id</th>
+                        <th style="width: 30%;">@lang('courses.table.title')</th>
+                        <th style="width: 50%;">@lang('courses.table.description')</th>
+                        <th style="width: 10%;">@lang('courses.table.action')</th>
                     </tr>
                 </thead>
             </table>
@@ -44,6 +44,7 @@
 
 @section('scripts')
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 <script>
     var table = $('.course-table').DataTable({
         processing: true,

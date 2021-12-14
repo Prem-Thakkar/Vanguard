@@ -21,11 +21,17 @@ class CourseController extends Controller
             $data = Course::query();
             return Datatables::of($data)
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('manage_courses.edit', $row->id) . '"><i class="fas fa-edit"></i></a>';
 
-                    $btn .= '<a href="' . route('manage_courses.destroy', $row->id) . '" class="ml-2" title="" data-toggle="tooltip" data-placement="top" data-method="DELETE" data-confirm-title="' . __('courses.delete_modal.confirm_label') . '" data-confirm-text="' . __('courses.delete_modal.comfirm_message') . '" data-confirm-delete="' . __('courses.delete_modal.comfirm_button') . '">
-                    <i class="fas fa-trash"></i>
-                    </a>';
+                    $btn = '<a class="btn btn-icon edit" title="" data-toggle="tooltip" data-placement="top"' .
+                        'data-original-title="Edit Course"' .
+                        'href="' . route('manage_courses.edit', $row->id) . '"><i class="fas fa-edit"></i></a>';
+
+                    $btn .= '<a class="btn btn-icon delete"'.
+                    'title="" data-toggle="tooltip" data-placement="top"' .
+                    'data-original-title="Delete Course"'.
+                    ' href="' . route('manage_courses.destroy', $row->id) . '" class="ml-2" title="" data-toggle="tooltip" data-placement="top" data-method="DELETE" data-confirm-title="' . __('courses.delete_modal.confirm_label') . '" data-confirm-text="' . __('courses.delete_modal.comfirm_message') . '" data-confirm-delete="' . __('courses.delete_modal.comfirm_button') . '">'.
+                    '<i class="fas fa-trash"></i>'.
+                    '</a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -117,18 +123,18 @@ class CourseController extends Controller
     public function list(Request $request)
     {
         $usercourses = UserCourse::with('course')->where('user_id', auth()->user()->id)->get();
-        return view('courses.list',compact('usercourses'));
+        return view('courses.list', compact('usercourses'));
     }
 
     public function detail($id)
     {
         $isCourseFourUser = UserCourse::where('user_id', auth()->user()->id)->where('course_id', $id)->count();
-        if ($isCourseFourUser == 0 ) {
+        if ($isCourseFourUser == 0) {
             abort(403);
         }
 
         $course = Course::findOrFail($id);
 
-        return view('courses.detail',compact('course'));
+        return view('courses.detail', compact('course'));
     }
 }
