@@ -31,26 +31,27 @@
             <label for="address">@lang('Address')</label>
             <input type="text" class="form-control input-solid" id="address" name="address" placeholder="@lang('Address')" value="{{ $edit ? $user->address : '' }}">
         </div>
-        <div class="form-group">
+    </div>
+
+        <div class="col-md-6 form-group">
             <label for="address">@lang('Country')</label>
             {!! Form::select('country_id', $countries, $edit ? $user->country_id : '', ['class' => 'form-control input-solid']) !!}
         </div>
-    </div>
-    @if($edit)
-    @if($user->role->id == 2 && auth()->user()->role->id == 1)
-    <div class="form-group col-md-6">
-        <label for="address">@lang('courses.page_name')</label>
-        <select id="courses" name="courses[]" multiple class="form-control">
-            @if(!empty($courses))
-            @foreach($courses as $course)
-            <option @if(in_array($course->id,$usercourses)) selected="" @endif value="{{$course->id}}">{{$course->title}}</option>
-            @endforeach
-            @endif
-        </select>
-    </div>
-    @endif
-    @endif
-    @if ($edit)
+        @if($edit)
+        @if(auth()->user()->role->id == 1)
+        <div class="form-group col-md-6">
+            <label for="address">@lang('courses.page_name')</label>
+            <select style="width: 100%;" class="custom-select form-control input-solid" data-placeholder="@lang('courses.select_placeholder')" id="courses" name="courses[]" multiple class="form-control">
+                @if(!empty($courses))
+                @foreach($courses as $course)
+                <option @if(in_array($course->id,$usercourses)) selected="" @endif value="{{$course->id}}">{{$course->title}}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
+        @endif
+        @endif
+     @if ($edit)
     <div class="col-md-12 mt-2">
         <button type="submit" class="btn btn-primary" id="update-details-btn">
             <i class="fa fa-refresh"></i>

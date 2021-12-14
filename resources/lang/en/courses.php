@@ -3,10 +3,11 @@
 return [
     'page_name' => 'Courses',
     'name' => 'Course',
-    'course_details'=>'Course Details',
-    'course_name'=>'Course Name',
-    'course_description'=>'Course Description',
-    'what_you_will_learn'=>'What you will learn?',
+    'course_details' => 'Course Details',
+    'course_name' => 'Course Name',
+    'course_description' => 'Course Description',
+    'what_you_will_learn' => 'What you will learn?',
+    'select_placeholder' => 'Select Courses',
     'table' => [
         'title' => 'Title',
         'description' => 'Description',
@@ -29,9 +30,9 @@ return [
         'title' => 'Edit Course',
         'page_name' => 'Edit'
     ],
-    'delete_modal'=>[
-        'confirm_label'=>"Please Confirm",
-        'comfirm_message'=>"Are you sure want to delete this course?",
-        'comfirm_button'=>"Yes,Delete this.",
+    'delete_modal' => [
+        'confirm_label' => "Please Confirm",
+        'comfirm_message' => "Are you sure want to delete this course?",
+        'comfirm_button' => "Yes,Delete this.",
     ]
 ];

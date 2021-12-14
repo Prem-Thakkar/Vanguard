@@ -64,7 +64,7 @@
             <div class="col-md-9">
                 <div class="form-group">
                     <label for="first_name">{{__('courses.page_name')}}</label>
-                    <select multiple="" type="text" class="form-control input-solid" id="courses" name="courses[]">
+                    <select data-placeholder="@lang('courses.select_placeholder')" multiple="" type="text" class="form-control input-solid" id="courses" name="courses[]">
                         @foreach($courses as $course)
                         <option value="{{$course->id}}">{{$course->title}}</option>
                         @endforeach
