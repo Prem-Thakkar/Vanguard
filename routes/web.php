@@ -101,8 +101,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
      */
     Route::resource('users', 'Users\UsersController')
         ->except('update')->middleware('permission:users.manage');
-
     Route::group(['prefix' => 'users/{user}', 'middleware' => 'permission:users.manage'], function () {
+        Route::get('status/change/{status}', 'Users\UsersController@changeStatus');
         Route::put('update/details', 'Users\DetailsController@update')->name('users.update.details');
         Route::put('update/login-details', 'Users\LoginDetailsController@update')
             ->name('users.update.login-details');

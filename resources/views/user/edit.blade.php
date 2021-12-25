@@ -16,7 +16,11 @@
     @lang('Edit')
 </li>
 @stop
-
+<style type="text/css">
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-top: 0px !important;
+}
+</style>
 @section('content')
 
 @include('partials.messages')
@@ -106,6 +110,7 @@
 
 <script>
     $("#courses").select2();
+    $('.select2-selection--multiple').addClass('form-control input-solid');
 </script>
 
 @stop

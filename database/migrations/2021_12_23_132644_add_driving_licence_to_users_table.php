@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsTermsAcceptedColumnInUsersTable extends Migration
+class AddDrivingLicenceToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddIsTermsAcceptedColumnInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_terms_accepted')->default(0);
+            $table->string('driving_licence', 255)->nullable()->after('birthday');
         });
     }
 
@@ -26,7 +26,7 @@ class AddIsTermsAcceptedColumnInUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_terms_accepted');
+            //
         });
     }
 }

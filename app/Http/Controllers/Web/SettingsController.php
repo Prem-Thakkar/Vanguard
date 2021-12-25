@@ -8,6 +8,7 @@ use Vanguard\Events\Settings\Updated as SettingsUpdated;
 use Illuminate\Http\Request;
 use Setting;
 use Vanguard\Http\Controllers\Controller;
+use DB;
 
 /**
  * Class SettingsController
@@ -61,6 +62,15 @@ class SettingsController extends Controller
     private function updatesetting($input)
     {
         foreach ($input as $key => $value) {
+            if ($key == 'app_name') {
+                $match = ['key' => 'app_name'];
+                $data = [
+                    'key' => 'app_name',
+                    'value' => $value
+                ];
+                DB::table('settings')->updateOrInsert($match, $data);
+                continue;
+            }
             Setting::set($key, $value);
         }
 

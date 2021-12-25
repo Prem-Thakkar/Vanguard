@@ -99,5 +99,12 @@
         $("#status").change(function () {
             $("#users-form").submit();
         });
+        $('body').on('change', '.change-status', function(event) {
+            event.preventDefault();
+            var status = $(this).val();
+            var userId = $(this).attr('data-user-id');
+            var url = 'users/'+userId+'/status/change/'+status;
+            window.location.href  = '{{ url('') }}'+'/'+url;
+        });
     </script>
 @stop

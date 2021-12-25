@@ -17,9 +17,28 @@
     <td class="align-middle">{{ $user->email }}</td>
     <td class="align-middle">{{ $user->created_at->format(config('app.date_format')) }}</td>
     <td class="align-middle">
-        <span class="badge badge-lg badge-{{ $user->present()->labelClass }}">
+      @if($user->id == auth()->user()->id)
+        {!!
+            Form::select(
+                'status_each',
+                $statusesWithoutAll,
+                $user->status,
+                ['id' => 'status_each', 'class' => 'form-control input-solid change-status', 'data-user-id' => $user->id, 'disabled' => 'disabled']
+            )
+        !!}
+      @else
+        {!!
+            Form::select(
+                'status_each',
+                $statusesWithoutAll,
+                $user->status,
+                ['id' => 'status_each', 'class' => 'form-control input-solid change-status', 'data-user-id' => $user->id]
+            )
+        !!}
+      @endif
+        {{-- <span class="badge badge-lg badge-{{ $user->present()->labelClass }}">
             {{ trans("app.status.{$user->status}") }}
-        </span>
+        </span> --}}
     </td>
     <td class="text-center align-middle">
         <div class="dropdown show d-inline-block">

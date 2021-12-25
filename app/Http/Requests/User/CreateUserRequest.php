@@ -20,7 +20,8 @@ class CreateUserRequest extends Request
             'password' => 'required|min:6|confirmed',
             'birthday' => 'nullable|date',
             'role_id' => 'required|exists:roles,id',
-            'verified' => 'boolean'
+            'verified' => 'boolean',
+            'driving_licence' => 'required'
         ];
 
         if ($this->get('country_id')) {

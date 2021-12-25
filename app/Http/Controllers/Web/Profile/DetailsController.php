@@ -35,6 +35,7 @@ class DetailsController extends Controller
      */
     public function update(UpdateProfileDetailsRequest $request)
     {
+        echo "string";exit;
         $this->users->update(auth()->id(), $request->except('role_id', 'status'));
 
         event(new UpdatedProfileDetails);

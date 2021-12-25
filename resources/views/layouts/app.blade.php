@@ -9,7 +9,10 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('page-title') - {{ setting('app_name') }}</title>
+    @php 
+     $setting = \DB::table('settings')->where('key', 'app_name')->select('value')->first();
+    @endphp
+    <title>@yield('page-title') - {{ isset($setting->value) ? $setting->value : 'Vanguard' }}</title>
 
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url('assets/img/icons/apple-touch-icon-144x144.png') }}" />
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ url('assets/img/icons/apple-touch-icon-152x152.png') }}" />

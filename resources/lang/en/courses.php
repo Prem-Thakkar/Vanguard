@@ -12,7 +12,8 @@ return [
         'title' => 'Title',
         'description' => 'Description',
         'action' => 'Action',
-        'add_course' => 'Add Course'
+        'add_course' => 'Add Course',
+        'image' => 'Image'
     ],
     'create_page' => [
         'title' => 'Create New Course',

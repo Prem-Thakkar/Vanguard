@@ -33,6 +33,9 @@
                         <input type="text" name="username" id="username" class="form-control input-solid" placeholder="@lang('Username')" value="{{ old('username') }}">
                     </div>
                     <div class="form-group">
+                        <input type="text" name="driving_licence" id="driving_licence" class="form-control input-solid" placeholder="@lang('Driving Licence')" value="{{ old('driving_licence') }}">
+                    </div>
+                    <div class="form-group">
                         <input type="password" name="password" id="password" class="form-control input-solid" placeholder="@lang('Password')">
                     </div>
                     <div class="form-group">

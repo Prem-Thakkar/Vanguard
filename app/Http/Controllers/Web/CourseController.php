@@ -20,6 +20,10 @@ class CourseController extends Controller
         if ($request->ajax()) {
             $data = Course::query();
             return Datatables::of($data)
+                ->editColumn('image', function ($row) {
+                    $imageLink = asset("storage/upload/course-images/$row->image");
+                    return "<a href=".$imageLink." target='_blank'><img class=rounded-circle img-responsive width=40 src=".$imageLink." alt='Course Image'></a>";
+                })
                 ->addColumn('action', function ($row) {
 
                     $btn = '<a class="btn btn-icon edit" title="" data-toggle="tooltip" data-placement="top"' .

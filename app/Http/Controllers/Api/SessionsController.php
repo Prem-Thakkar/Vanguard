@@ -1,52 +1,33 @@
 <?php
 
-namespace Vanguard\Http\Controllers\Api;
+namespace Vanguard\Http\Controllers\Api\Users;
 
+use Vanguard\Http\Controllers\Api\ApiController;
 use Vanguard\Http\Resources\SessionResource;
 use Vanguard\Repositories\Session\SessionRepository;
+use Vanguard\User;
 
 /**
- * Class SessionsController
  * @package Vanguard\Http\Controllers\Api\Users
  */
 class SessionsController extends ApiController
 {
-    /**
-     * @var SessionRepository
-     */
-    private $sessions;
-
-    public function __construct(SessionRepository $sessions)
+    public function __construct()
     {
+        $this->middleware('permission:users.manage');
         $this->middleware('session.database');
-        $this->sessions = $sessions;
     }
 
     /**
-     * Get info about specified session.
-     * @param $session
-     * @return SessionResource
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * Get sessions for specified user.
+     * @param User $user
+     * @param SessionRepository $sessions
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function show($session)
+    public function index(User $user, SessionRepository $sessions)
     {
-        $this->authorize('manage-session', $session);
-
-        return new SessionResource($session);
-    }
-
-    /**
-     * Destroy specified session.
-     * @param $session
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function destroy($session)
-    {
-        $this->authorize('manage-session', $session);
-
-        $this->sessions->invalidateSession($session->id);
-
-        return $this->respondWithSuccess();
+        return SessionResource::collection(
+            $sessions->getUserSessions($user->id)
+        );
     }
 }

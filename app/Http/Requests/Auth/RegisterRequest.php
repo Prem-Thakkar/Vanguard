@@ -18,6 +18,7 @@ class RegisterRequest extends Request
             'email' => 'required|email|unique:users,email',
             'username' => 'required|unique:users,username',
             'password' => 'required|confirmed|min:8',
+            'driving_licence' => 'required'
         ];
 
         if (setting('registration.captcha.enabled')) {
@@ -56,7 +57,7 @@ class RegisterRequest extends Request
             ? UserStatus::UNCONFIRMED
             : UserStatus::ACTIVE;
 
-        return array_merge($this->only('email', 'username', 'password'), [
+        return array_merge($this->only('email', 'username', 'password', 'driving_licence'), [
             'status' => $status,
             'email_verified_at' => setting('reg_email_confirmation') ? null : now()
         ]);

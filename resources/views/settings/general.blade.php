@@ -24,8 +24,11 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="name">@lang('Name')</label>
+                    @php 
+                     $setting = \DB::table('settings')->where('key', 'app_name')->select('value')->first();
+                    @endphp
                     <input type="text" class="form-control input-solid" id="app_name"
-                           name="app_name" value="{{ setting('app_name') }}">
+                           name="app_name" value="{{ isset($setting->value) ? $setting->value : 'Vanguard' }}">
                 </div>
             </div>
         </div>

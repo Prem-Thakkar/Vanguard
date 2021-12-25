@@ -16,6 +16,8 @@ use Vanguard\Support\Enum\UserStatus;
 use Vanguard\User;
 use Vanguard\Course;
 use Vanguard\UserCourse;
+use Vanguard\Events\User\UpdatedByAdmin;
+use Vanguard\Events\User\Banned;
 
 /**
  * Class UsersController
@@ -48,8 +50,9 @@ class UsersController extends Controller
         $users = $this->users->paginate($perPage = 20, $request->search, $request->status);
 
         $statuses = ['' => __('All')] + UserStatus::lists();
+        $statusesWithoutAll = UserStatus::lists();
 
-        return view('user.list', compact('users', 'statuses'));
+        return view('user.list', compact('users', 'statuses', 'statusesWithoutAll'));
     }
 
     /**
@@ -177,5 +180,15 @@ class UsersController extends Controller
 
         return redirect()->route('users.index')
             ->withSuccess(__('User deleted successfully.'));
+    }
+    public function changeStatus(User $user, $status)
+    {
+        $user = $this->users->update($user->id, ['status' => $status]);
+        event(new UpdatedByAdmin($user));
+        if ($status == UserStatus::BANNED) {
+            event(new Banned($user));
+        }
+
+        return redirect()->back()->withSuccess(__('User status updated successfully.'));
     }
 }

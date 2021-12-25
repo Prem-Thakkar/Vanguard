@@ -12,18 +12,15 @@ use Mail;
 use Vanguard\Events\User\RequestedPasswordResetEmail;
 use Vanguard\Presenters\Traits\Presentable;
 use Vanguard\Presenters\UserPresenter;
-use Vanguard\Services\Auth\TwoFactor\Authenticatable as TwoFactorAuthenticatable;
-use Vanguard\Services\Auth\TwoFactor\Contracts\Authenticatable as TwoFactorAuthenticatableContract;
 use Vanguard\Support\Authorization\AuthorizationUserTrait;
 use Vanguard\Support\CanImpersonateUsers;
 use Vanguard\Support\Enum\UserStatus;
 use Vanguard\Course;
 use Vanguard\UserCourse;
 
-class User extends Authenticatable implements TwoFactorAuthenticatableContract, MustVerifyEmail
+class User extends Authenticatable implements  MustVerifyEmail
 {
-    use TwoFactorAuthenticatable,
-        CanResetPassword,
+    use CanResetPassword,
         Presentable,
         AuthorizationUserTrait,
         Notifiable,
@@ -50,7 +47,7 @@ class User extends Authenticatable implements TwoFactorAuthenticatableContract, 
     protected $fillable = [
         'email', 'password', 'username', 'first_name', 'last_name', 'phone', 'avatar',
         'address', 'country_id', 'birthday', 'last_login', 'confirmation_token', 'status',
-        'remember_token', 'role_id', 'email_verified_at'
+        'remember_token', 'role_id', 'email_verified_at', 'driving_licence'
     ];
 
     /**
